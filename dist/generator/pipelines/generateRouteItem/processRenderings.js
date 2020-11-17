@@ -51,7 +51,7 @@ var generateRenderingParams = function (component, rendering) {
     }, []);
     if (!Array.isArray(component.params)) {
         // tslint:disable-next-line:max-line-length no-string-throw
-        console.error(chalk_1.default.red("An instance of " + component.name + " defined param(s) '" + reducedParams.map(function (rp) { return rp.name; }).join(', ') + "', but the component definition did not define any params. Define them on the manifest component definition to use them. Instance definition: " + JSON.stringify(rendering, null, 2)));
+        console.warn(chalk_1.default.red("An instance of " + component.name + " defined param(s) '" + reducedParams.map(function (rp) { return rp.name; }).join(', ') + "', but the component definition did not define any params. Define them on the manifest component definition to use them. Instance definition: " + JSON.stringify(rendering, null, 2)));
     }
     // find params that are not defined in manifest
     // tslint:disable-next-line:max-line-length
@@ -60,7 +60,7 @@ var generateRenderingParams = function (component, rendering) {
         var validParams = component.params.map(function (cp) { return (cp.name ? cp.name : cp); }).join(',');
         var invalidParamsString = invalidParams.map(function (ip) { return ip.name; }).join(', ');
         // tslint:disable-next-line:max-line-length no-string-throw
-        console.error(chalk_1.default.red("Param(s) " + invalidParamsString + " defined on an instance of component " + component.name + " was not defined on the component definition. Add it to the manifest component definition to use it. Valid params: " + validParams + ". Instance definition: " + JSON.stringify(rendering, null, 2)));
+        console.warn(chalk_1.default.red("Param(s) " + invalidParamsString + " defined on an instance of component " + component.name + " was not defined on the component definition. Add it to the manifest component definition to use it. Valid params: " + validParams + ". Instance definition: " + JSON.stringify(rendering, null, 2)));
     }
     return reducedParams;
 };
@@ -71,7 +71,7 @@ var generateFields = function (component, rendering, dataSourceItem, allComponen
     var renderingFields = rendering.fields;
     if (component) {
         // tslint:disable-next-line:max-line-length
-        var handleError = function (fieldName) { console.error(chalk_1.default.red(dataSourceItem.name + " route datasource defined data for '" + fieldName + "' on component " + component.name + ". This field is not defined on this component. It may be a typo, or the field may need to be added to the component definition.")); };
+        var handleError = function (fieldName) { console.warn(chalk_1.default.red(dataSourceItem.name + " route datasource defined data for '" + fieldName + "' on component " + component.name + ". This field is not defined on this component. It may be a typo, or the field may need to be added to the component definition.")); };
         renderingFields = utils_1.validateFieldDefinitions(rendering.fields, component, handleError, allComponents);
     }
     return utils_1.convertComponentDataToFields({ data: renderingFields, context: { item: dataSourceItem } });
@@ -137,7 +137,7 @@ var processRendering = function (rendering, index, context) {
     // (defines id but not name)
     if (!component && rendering.componentName) {
         // tslint:disable-next-line:max-line-length
-        console.error(chalk_1.default.red("The component '" + rendering.componentName + "' used on route '" + context.route.name + "' was not defined in the manifest. Please define this component with 'manifest.addComponent()', or change the name to an existing component name."));
+        console.warn(chalk_1.default.red("The component '" + rendering.componentName + "' used on route '" + context.route.name + "' was not defined in the manifest. Please define this component with 'manifest.addComponent()', or change the name to an existing component name."));
     }
     var renderingParams = generateRenderingParams(component, rendering);
     var fields = generateFields(component, rendering, dsItem, context.components);
