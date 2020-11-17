@@ -1,2 +1,4 @@
 /sitecore
 /types
+.DS_Store
+node_modules
