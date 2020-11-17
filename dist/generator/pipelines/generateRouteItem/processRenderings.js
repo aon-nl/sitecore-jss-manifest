@@ -38,7 +38,7 @@ var manifest_types_1 = require("../../manifest.types");
 var utils_1 = require("../../utils");
 var JSS_UUID_NAMESPACE = '0e52892a-f862-4d08-9487-987617b637cd';
 var generateRenderingParams = function (component, rendering) {
-    var _a;
+    var _a, _b, _c, _d, _e;
     if (!rendering.params) {
         return [];
     }
@@ -52,16 +52,16 @@ var generateRenderingParams = function (component, rendering) {
     }, []);
     if (!Array.isArray((_a = component) === null || _a === void 0 ? void 0 : _a.params)) {
         // tslint:disable-next-line:max-line-length no-string-throw
-        console.warn(chalk_1.default.red("An instance of " + component.name + " defined param(s) '" + reducedParams.map(function (rp) { return rp.name; }).join(', ') + "', but the component definition did not define any params. Define them on the manifest component definition to use them. Instance definition: " + JSON.stringify(rendering, null, 2)));
+        console.warn(chalk_1.default.red("An instance of " + ((_b = component) === null || _b === void 0 ? void 0 : _b.name) + " defined param(s) '" + reducedParams.map(function (rp) { return rp.name; }).join(', ') + "', but the component definition did not define any params. Define them on the manifest component definition to use them. Instance definition: " + JSON.stringify(rendering, null, 2)));
     }
     // find params that are not defined in manifest
     // tslint:disable-next-line:max-line-length
-    var invalidParams = reducedParams.filter(function (param) { return !component.params.some(function (componentParam) { return (componentParam.name ? componentParam.name : componentParam) === param.name; }); });
+    var invalidParams = reducedParams.filter(function (param) { var _a, _b; return !((_b = (_a = component) === null || _a === void 0 ? void 0 : _a.params) === null || _b === void 0 ? void 0 : _b.some(function (componentParam) { return (componentParam.name ? componentParam.name : componentParam) === param.name; })); });
     if (invalidParams.length > 0) {
-        var validParams = component.params.map(function (cp) { return (cp.name ? cp.name : cp); }).join(',');
+        var validParams = (_d = (_c = component) === null || _c === void 0 ? void 0 : _c.params) === null || _d === void 0 ? void 0 : _d.map(function (cp) { return (cp.name ? cp.name : cp); }).join(',');
         var invalidParamsString = invalidParams.map(function (ip) { return ip.name; }).join(', ');
         // tslint:disable-next-line:max-line-length no-string-throw
-        console.warn(chalk_1.default.red("Param(s) " + invalidParamsString + " defined on an instance of component " + component.name + " was not defined on the component definition. Add it to the manifest component definition to use it. Valid params: " + validParams + ". Instance definition: " + JSON.stringify(rendering, null, 2)));
+        console.warn(chalk_1.default.red("Param(s) " + invalidParamsString + " defined on an instance of component " + ((_e = component) === null || _e === void 0 ? void 0 : _e.name) + " was not defined on the component definition. Add it to the manifest component definition to use it. Valid params: " + validParams + ". Instance definition: " + JSON.stringify(rendering, null, 2)));
     }
     return reducedParams;
 };
