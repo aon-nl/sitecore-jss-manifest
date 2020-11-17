@@ -27,7 +27,7 @@ const generateRenderingParams = (component: any, rendering: any) => {
     ];
   }, []);
 
-  if (!Array.isArray(component.params)) {
+  if (!Array.isArray(component?.params)) {
     // tslint:disable-next-line:max-line-length no-string-throw
     console.warn(chalk.red(`An instance of ${component.name} defined param(s) '${reducedParams.map((rp) => rp.name).join(', ')}', but the component definition did not define any params. Define them on the manifest component definition to use them. Instance definition: ${JSON.stringify(rendering, null, 2)}`));
   }

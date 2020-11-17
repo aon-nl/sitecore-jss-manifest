@@ -38,6 +38,7 @@ var manifest_types_1 = require("../../manifest.types");
 var utils_1 = require("../../utils");
 var JSS_UUID_NAMESPACE = '0e52892a-f862-4d08-9487-987617b637cd';
 var generateRenderingParams = function (component, rendering) {
+    var _a;
     if (!rendering.params) {
         return [];
     }
@@ -49,7 +50,7 @@ var generateRenderingParams = function (component, rendering) {
             },
         ]);
     }, []);
-    if (!Array.isArray(component.params)) {
+    if (!Array.isArray((_a = component) === null || _a === void 0 ? void 0 : _a.params)) {
         // tslint:disable-next-line:max-line-length no-string-throw
         console.warn(chalk_1.default.red("An instance of " + component.name + " defined param(s) '" + reducedParams.map(function (rp) { return rp.name; }).join(', ') + "', but the component definition did not define any params. Define them on the manifest component definition to use them. Instance definition: " + JSON.stringify(rendering, null, 2)));
     }
