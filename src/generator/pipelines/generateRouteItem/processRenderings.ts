@@ -27,21 +27,21 @@ const generateRenderingParams = (component: any, rendering: any) => {
     ];
   }, []);
 
-  // if (!Array.isArray(component.params)) {
-  //   // tslint:disable-next-line:max-line-length no-string-throw
-  //   throw chalk.red(`An instance of ${component.name} defined param(s) '${reducedParams.map((rp) => rp.name).join(', ')}', but the component definition did not define any params. Define them on the manifest component definition to use them. Instance definition: ${JSON.stringify(rendering, null, 2)}`);
-  // }
+  if (!Array.isArray(component.params)) {
+    // tslint:disable-next-line:max-line-length no-string-throw
+    console.error(chalk.red(`An instance of ${component.name} defined param(s) '${reducedParams.map((rp) => rp.name).join(', ')}', but the component definition did not define any params. Define them on the manifest component definition to use them. Instance definition: ${JSON.stringify(rendering, null, 2)}`));
+  }
 
-  // // find params that are not defined in manifest
-  // // tslint:disable-next-line:max-line-length
-  // const invalidParams = reducedParams.filter((param) => !component.params.some((componentParam: any) => (componentParam.name ? componentParam.name : componentParam) === param.name));
+  // find params that are not defined in manifest
+  // tslint:disable-next-line:max-line-length
+  const invalidParams = reducedParams.filter((param) => !component.params.some((componentParam: any) => (componentParam.name ? componentParam.name : componentParam) === param.name));
 
-  // if (invalidParams.length > 0) {
-  //   const validParams = component.params.map((cp: any) => (cp.name ? cp.name : cp)).join(',');
-  //   const invalidParamsString = invalidParams.map((ip) => ip.name).join(', ');
-  //   // tslint:disable-next-line:max-line-length no-string-throw
-  //   throw chalk.red(`Param(s) ${invalidParamsString} defined on an instance of component ${component.name} was not defined on the component definition. Add it to the manifest component definition to use it. Valid params: ${validParams}. Instance definition: ${JSON.stringify(rendering, null, 2)}`);
-  // }
+  if (invalidParams.length > 0) {
+    const validParams = component.params.map((cp: any) => (cp.name ? cp.name : cp)).join(',');
+    const invalidParamsString = invalidParams.map((ip) => ip.name).join(', ');
+    // tslint:disable-next-line:max-line-length no-string-throw
+    console.error(chalk.red(`Param(s) ${invalidParamsString} defined on an instance of component ${component.name} was not defined on the component definition. Add it to the manifest component definition to use it. Valid params: ${validParams}. Instance definition: ${JSON.stringify(rendering, null, 2)}`));
+  }
 
   return reducedParams;
 };
