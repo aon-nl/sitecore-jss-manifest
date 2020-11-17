@@ -11,17 +11,18 @@ function expandReferencedContent(manifest) {
     var idMap = createIdMapping_1.createIdMapping(manifest);
     // we expand copy: true ID references to be a copy of the original
     idMap.usages.reverse().forEach(function (idReference) {
+        var _a, _b;
         expandedItems = true;
         var source = idMap.ids.get(idReference.id);
-        var sourceType = source.type;
+        var sourceType = (_a = source) === null || _a === void 0 ? void 0 : _a.type;
         var targetType = idReference.type;
-        var refDeepClone = JSON.parse(JSON.stringify(source.item));
+        var refDeepClone = source ? JSON.parse(JSON.stringify(source.item)) : undefined;
         var expandedRef = Object.assign({ resolvedFromItemId: idReference.id }, refDeepClone);
         // we clear the `id` off any children of the expanded reference because this would result
         // in a duplicate ID definition. There are two possible cases here:
         // (a) an ID reference, in which case removing the ID will not affect the original referenced child ID
         // (b) an ID with copy reference, in which case the copy would legitimately always be a duplicate ID unless we unset it
-        traversal_1.traverseAllItems(refDeepClone.children, function (item) { delete item.id; });
+        traversal_1.traverseAllItems((_b = refDeepClone) === null || _b === void 0 ? void 0 : _b.children, function (item) { delete item.id; });
         if (targetType === 'rendering') {
             expandedRef.dataSource = expandedRef.dataSource || {};
             // change 'template' (for items) to 'renderingName' (for renderings)
